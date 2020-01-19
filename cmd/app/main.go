@@ -1,9 +1,11 @@
 package main
 
-import "github.com/stephnr/dorm"
+import (
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/stephnr/dorm"
+)
 
-type TodoItem struct {
-	dorm.Entity
+type Todo struct {
 	ID          string `dorm:"HASH"`
 	UserID      string `dorm:"RANGE" dormav:"user_id"`
 	Todo        string
@@ -11,8 +13,16 @@ type TodoItem struct {
 }
 
 func main() {
-	todoList, _ := dorm.LoadTable("todo-lists", TodoItem, &dorm.TableOptions{
-		ForceCreate: true,
+	awsConfig := &aws.Config{Region: aws.String("eu-west-1")}
+
+	// table error?
+	todoList := dorm.LoadTable(dorm.TableLoadOptions{
+		AwsConfig: awsConfig,
+		TableName: "todo-list",
+		Type:      Todo{},
+		Options: &dorm.TableOptions{
+			ForceCreate: true,
+		},
 	})
 
 	todoList.Scan( /* ... */ )

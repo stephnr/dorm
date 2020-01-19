@@ -18,7 +18,7 @@ type Todo struct {
 func TestEntity_Key(t *testing.T) {
 	awsConfig := &aws.Config{Region: aws.String("eu-west-1")}
 
-	dorm.Load(dorm.TableLoadOptions{
+	dorm.LoadTable(dorm.TableLoadOptions{
 		AwsConfig: awsConfig,
 		TableName: "todo-list",
 		Type:      Todo{},

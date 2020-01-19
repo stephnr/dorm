@@ -28,7 +28,7 @@ type TableOptions struct {
 	WriteUnits  *int64
 }
 
-func Load(opts TableLoadOptions) *Table {
+func LoadTable(opts TableLoadOptions) *Table {
 	return newTable(opts)
 }
 

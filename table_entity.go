@@ -1,15 +1,27 @@
 package dorm
 
+type dataType string
+
 const (
 	hashParamTag  = "HASH"
 	rangeParamTag = "RANGE"
+
+	dataTypeBinary  dataType = "B"
+	dataTypeNumber  dataType = "N"
+	dataTypeString  dataType = "S"
+	dataTypeUnknown dataType = ""
 )
 
 type metadata struct {
-	tableName      string
-	hashParamName  string
-	rangeParamName string
-	raw            interface{}
+	TableName  string
+	HashParam  *paramType
+	RangeParam *paramType
+	Raw        interface{}
+}
+
+type paramType struct {
+	Name string
+	Type dataType
 }
 
 func (en metadata) Key() {

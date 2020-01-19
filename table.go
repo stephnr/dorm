@@ -1,8 +1,6 @@
 package dorm
 
-import (
-	"github.com/aws/aws-sdk-go/aws"
-)
+import "github.com/aws/aws-sdk-go/aws"
 
 const (
 	dormTag     = "dorm"
@@ -19,7 +17,6 @@ type TableLoadOptions struct {
 	TableName string
 	Type      interface{}
 	Options   *TableOptions
-	AwsConfig *aws.Config
 }
 
 type TableOptions struct {
@@ -28,16 +25,12 @@ type TableOptions struct {
 	WriteUnits  *int64
 }
 
-func LoadTable(opts TableLoadOptions) *Table {
-	return newTable(opts)
-}
-
-func newTable(opts TableLoadOptions) *Table {
+func newTable(awsCfg *aws.Config, opts TableLoadOptions) *Table {
 	tbl := &Table{
-		aws: newAwsMeta(opts.AwsConfig),
+		aws: newAwsMeta(awsCfg),
 		model: &metadata{
-			tableName: opts.TableName,
-			raw:       opts.Type,
+			TableName: opts.TableName,
+			Raw:       opts.Type,
 		},
 		options: opts.Options,
 	}
